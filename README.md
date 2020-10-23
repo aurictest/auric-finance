@@ -3,7 +3,7 @@
 ## Functionality Brief
 
 ### Token
-The main token contract is AUSC cloned from YAMv3 (who cloned from Compound). 
+The main token contract is AUSCM cloned from YAMv3 (who cloned from Compound). 
 The token is an ERC20 token with rebasing functionality which additionally 
 inherits governance features. The token should have an initial fixed supply
 of 30,000,000 tokens. From this moment onwards, the supply will be regulated
@@ -19,10 +19,10 @@ new tokens. The new tokens are subjected to rebases in the next rebasing rounds.
 The governance then can set the rebaser. The rebaser is the only address allowed to
 initiate a rebase. The current implementation provides a rebaser called BasicMonetaryPolicy
 that uses oracles to checkpoint price every hour, and maintains a running average price
-of gold (XAU) and AUSC. If the price of AUSC diverts by more than 5% from XAU, anyone
+of gold (XAU) and AUSC. If the price of AUSCM diverts by more than 5% from XAU, anyone
 externally owned account can initiate a rebase through this smart contract. The
 restriction to exteranlly owned accounts is made to avoid possible market manipulations
-(e.g. by flashloans) as the price of AUSC is to be taken from DEXes such as Uniswap.
+(e.g. by flashloans) as the price of AUSCM is to be taken from DEXes such as Uniswap.
 The price of XAU is to be taken from Chainlink's oracle. The BasicMonetaryPolicy is
 an abstract smart contract, i.e., it does not implement the functions for reading
 the price from Uniswap and Chainlink. For the purposes of the audit, assume that the 
@@ -77,7 +77,7 @@ is embedded in the rebaser, so it can change with rebaser changes.
 The governance is a clone of Compound's governance and consists of two parts. The first part
 is counting votes that an account has. This part is embedded directly into the contract
 through inheritance. Every account that wants to participate in governance should call function
-delegate(address) on the AUSC token, which will checkpoint the number of votes that the account has.
+delegate(address) on the AUSCM token, which will checkpoint the number of votes that the account has.
 The votes will be issued to the address provided as a parameter. Minting and transferring 
 tokens ensures that votes are moved accordingly, creating new checkpoints whenever.
 
@@ -118,10 +118,9 @@ initial supply of tokens to themsleves (intended to be 30,000,000).
 
 **Distribution.** After the original 30,000,000 get minted, the owner will
 create a Uniswap pool. It will deposit 44% of all tokens to the pool, matched
-with Ether. The owner then intends to buy 50% of these tokens back at the market
-price. The remaining 56% will be distributed into reward pool escrows. The owner
+with Ether. The remaining 56% will be distributed into reward pool escrows. The owner
 will deploy all the reward pools, their escrows, and placeholder tokens. The
-owner will then transfer AUSC tokens to the escrows (giving the AUSC-ETH a 3x
+owner will then transfer AUSC tokens to the escrows (giving the AUSCM-ETH a 3x
 multiplier), load the pools with the placeholder tokens, and notify to the pools
 to activate the reward distribution.
 
