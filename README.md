@@ -3,7 +3,7 @@
 ## Functionality Brief
 
 ### Token
-The main token contract is AUSC cloned from YAMv3 (who cloned from Compound). 
+The main token contract is AUSCM cloned from YAMv3 (who cloned from Compound). 
 The token is an ERC20 token with rebasing functionality which additionally 
 inherits governance features. The token should have an initial fixed supply
 of 30,000,000 tokens. From this moment onwards, the supply will be regulated
@@ -26,9 +26,9 @@ restriction to exteranlly owned accounts is made to avoid possible market manipu
 The price of XAU is to be taken from Chainlink's oracle. The BasicMonetaryPolicy is
 an abstract smart contract, i.e., it does not implement the functions for reading
 the price from Uniswap and Chainlink. For the purposes of the audit, assume that the 
-monetary policy used in production implements the two abstract functions and intergates
+monetary policy used in production implements the two abstract functions and integrates
 with both protocols correctly. For the testing purposes and demonstration of the
-inteded functionality, the implementation provides a MockMonetaryPolicy which is used in tests.
+intended functionality, the implementation provides a MockMonetaryPolicy which is used in tests.
 
 To further reduce the market manipulation options, rebases driven by the BasicMonetaryPolicy
 take into account prices of up to 1 hours ago. Therefore, prices are stored as pending
@@ -118,15 +118,14 @@ initial supply of tokens to themsleves (intended to be 30,000,000).
 
 **Distribution.** After the original 30,000,000 get minted, the owner will
 create a Uniswap pool. It will deposit 44% of all tokens to the pool, matched
-with Ether. The owner then intends to buy 50% of these tokens back at the market
-price. The remaining 56% will be distributed into reward pool escrows. The owner
+with Ether. The remaining 56% will be distributed into reward pool escrows. The owner
 will deploy all the reward pools, their escrows, and placeholder tokens. The
 owner will then transfer AUSC tokens to the escrows (giving the AUSC-ETH a 3x
 multiplier), load the pools with the placeholder tokens, and notify to the pools
 to activate the reward distribution.
 
-A secondary reward pool will be deployed separately. The pool will have a distribution
-interval 14 days, and will launch 14 days after the original pools finish distributing.
+A secondary rewards pool will be deployed separately. The pool will have a distribution
+interval of 14 days, and will launch 14 days after the original pools finish distributing.
 
 The governance needs to be set for all escrows. The governance will be the timelock,
 ensuring that the recipients of the endowments can be changed.
